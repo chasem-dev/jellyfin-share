@@ -1,0 +1,31 @@
+services:
+  share-portal:
+    image: ${PORTAL_IMAGE:-jellyfin-share:0.1.0}
+    restart: unless-stopped
+    user: "${PUID:-1000}:${PGID:-1000}"
+    environment:
+      PUBLIC_BASE_URL: ${PUBLIC_URL:?Set PUBLIC_URL in .env}
+      PUBLIC_BIND: 0.0.0.0
+      PUBLIC_PORT: 8787
+      ADMIN_BIND: 0.0.0.0
+      ADMIN_PORT: 8788
+      ADMIN_EXTERNAL_PORT: ${MANAGER_HOST_PORT:-8788}
+      ADMIN_ALLOWED_HOSTS: ${MANAGER_ALLOWED_HOSTS:-127.0.0.1,localhost}
+      MEDIA_ROOTS: /media/Movies:/media/TV
+      PORTAL_DATA: /data
+      PORTAL_CACHE: /cache
+    ports:
+      - "${PUBLIC_HOST_BIND:-127.0.0.1}:${PUBLIC_HOST_PORT:-8787}:8787"
+      - "${MANAGER_HOST_BIND:-127.0.0.1}:${MANAGER_HOST_PORT:-8788}:8788"
+    volumes:
+      - ${MOVIES_DIR:?Set MOVIES_DIR in .env}:/media/Movies:ro
+      - ${TV_DIR:?Set TV_DIR in .env}:/media/TV:ro
+      - ${DATA_DIR:-./instance/data}:/data
+      - ${CACHE_DIR:-./instance/cache}:/cache
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m

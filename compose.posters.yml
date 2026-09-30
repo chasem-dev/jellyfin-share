@@ -1,0 +1,4 @@
+services:
+  share-portal:
+    volumes:
+      - ${JELLYFIN_METADATA_DIR:?Set JELLYFIN_METADATA_DIR in .env}:/var/lib/jellyfin/metadata/library:ro

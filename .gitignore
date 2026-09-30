@@ -1,0 +1,12 @@
+.env
+compose.yml
+data/
+instance/
+library/
+__pycache__/
+*.pyc
+*.db
+*.db-*
+preview-sample-*.jpg
+jellyfin-share-og-preview-*.jpg
+*.tar.gz

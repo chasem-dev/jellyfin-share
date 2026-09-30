@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Watch shared video</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/hls.min.js" defer></script>
+  <script src="/assets/viewer.js" defer></script>
+</head>
+<body class="viewer-page">
+  <header class="topbar viewer-topbar"><div class="brand"><span class="brand-mark">▶</span><span>Shared viewing</span></div><span class="private-pill"><span class="dot"></span>Private link</span></header>
+  <main class="viewer-shell">
+    <div class="viewer-intro"><p class="eyebrow">NOW AVAILABLE TO WATCH</p><h1 id="title">Loading your video…</h1><p id="scope-label" class="scope-label" hidden></p><p id="expiry" class="expiry"></p></div>
+    <section class="player-card" aria-label="Video player"><div class="video-wrap"><video id="player" controls playsinline preload="metadata" aria-label="Shared video"></video><button id="player-message" class="player-message" type="button">Choose an episode and press play.</button></div><div class="player-foot"><div><span class="eyebrow">PLAYING</span><h2 id="playing">—</h2></div><span class="quality">Video · Audio</span></div></section>
+    <section id="episodes-section" class="episodes-section" hidden><div class="section-title"><p class="eyebrow">THE SERIES</p><h2>Episodes</h2></div><div id="episodes" class="episode-list"></div></section>
+    <p id="viewer-error" class="viewer-error" role="alert"></p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,3 @@
+{$SHARE_DOMAIN} {
+    reverse_proxy share-portal:8787
+}
