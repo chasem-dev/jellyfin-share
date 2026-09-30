@@ -45,7 +45,7 @@ Run `docker compose up -d`. Open the manager at `http://127.0.0.1:8788`; share l
 
 ## Run the portable image
 
-1. Copy `.env.example` to `.env`. Set `PORTAL_IMAGE` to the image you pulled, or build the image locally with `docker build -t jellyfin-share:0.1.0 .`.
+1. Copy `.env.example` to `.env`. It points to the published `ghcr.io/chasem-dev/jellyfin-share:0.1.0` image. To build from source instead, run `docker build -t jellyfin-share:0.1.0 .` and set `PORTAL_IMAGE=jellyfin-share:0.1.0`.
 2. Edit `MOVIES_DIR` and `TV_DIR` to point to existing folders on the Docker host. Each folder should contain one subfolder per movie or series. Create the `DATA_DIR` and `CACHE_DIR` folders and make them writable by `PUID:PGID`. The default relative locations are `./instance/data` and `./instance/cache`.
 3. Set `PUBLIC_URL` to the full address viewers will open. For a first test on the Docker host, `http://127.0.0.1:8787` works. For links sent to others, use a reachable address, preferably an HTTPS domain.
 4. Start the container:
