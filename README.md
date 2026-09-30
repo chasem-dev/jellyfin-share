@@ -13,6 +13,36 @@ One container runs two separate HTTP listeners:
 
 The manager has no login. Keep port 8788 off the internet and do not proxy it through the public domain. Anyone with an active link can watch its selected media until it expires or is revoked.
 
+## Basic Compose example
+
+Save this as `compose.yml`. Replace the example server IP, the two media paths, and the `user` ID if your media/storage owner is different. Create writable `./data` and `./cache` folders before starting it.
+
+```yaml
+services:
+  share-portal:
+    image: ghcr.io/chasem-dev/jellyfin-share:0.1.0
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      PUBLIC_BASE_URL: "http://192.168.1.10:8787"
+      PUBLIC_BIND: "0.0.0.0"
+      ADMIN_BIND: "0.0.0.0"
+      ADMIN_ALLOWED_HOSTS: "127.0.0.1,localhost"
+      MEDIA_ROOTS: "/media/Movies:/media/TV"
+      PORTAL_DATA: "/data"
+      PORTAL_CACHE: "/cache"
+    ports:
+      - "8787:8787"             # Viewer, reachable on the network
+      - "127.0.0.1:8788:8788"   # Manager, this computer only
+    volumes:
+      - "/path/to/Movies:/media/Movies:ro"
+      - "/path/to/TV:/media/TV:ro"
+      - "./data:/data"
+      - "./cache:/cache"
+```
+
+Run `docker compose up -d`. Open the manager at `http://127.0.0.1:8788`; share links use `PUBLIC_BASE_URL`. To reach the manager from another device on your LAN, replace `127.0.0.1` in its port mapping with your server's LAN IP and add that IP to `ADMIN_ALLOWED_HOSTS`. Keep port 8788 private. For internet viewers, put port 8787 behind HTTPS and set `PUBLIC_BASE_URL` to the HTTPS address.
+
 ## Run the portable image
 
 1. Copy `.env.example` to `.env`. Set `PORTAL_IMAGE` to the image you pulled, or build the image locally with `docker build -t jellyfin-share:0.1.0 .`.
